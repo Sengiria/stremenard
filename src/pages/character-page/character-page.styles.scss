@@ -1,0 +1,39 @@
+$light-green: #7bcf96;
+$light-blue: #03a9f4;
+
+.split {
+    position: relative;
+    height: 100vh;
+    display: flex;
+
+    .screen {
+        position: relative;
+        flex-grow: 1;
+        transition: 1s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+
+        &:nth-child(2){
+            background: $light-green;
+        }
+
+        .card {
+            max-width: 300px;
+            text-align: center;
+            transition: 0.5s;
+
+            .image-box {
+                width: 200px;
+                height: 200px;
+                overflow: hidden;
+                margin: 0 auto;
+
+                img {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}
