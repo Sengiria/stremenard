@@ -14,23 +14,28 @@ $light-blue: #03a9f4;
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        background: url(../../assets/character-bg.jpg) no-repeat; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
 
         .card {
             max-width: 300px;
             text-align: center;
             transition: 0.5s;
-            
 
             .image-box {
-                width: 450px;
-                height: 450px;
-                //overflow: hidden;
+                width: 200px;
+                height: 70vh;
+                display: flex;
+               // overflow: hidden;
                 margin: 0 auto;
-
+                flex-wrap: wrap;
 
                 img {
-                    max-width: 100%;
-
+                    //max-width: 100%;
+                    width: 100%;
                 }
             }
         }
@@ -78,6 +83,5 @@ $light-blue: #03a9f4;
 
                 }
             }
-
        }
 }

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './interaction-menu.styles.scss';
 import { FaWineBottle, FaPizzaSlice } from "react-icons/fa";
 import { GiBroom, GiAlarmClock, GiTennisBall } from "react-icons/gi";
-import { signOut, updateGochi, auth } from '../../firebase/firebase.utils';
+import { updateGochi, auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selector';
@@ -142,7 +142,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
         updateGochi(currentUser.id, newValue, xp, level, 50)
     }
     const increaseStats = () => {
-        const stats = { boredom: boredom + 10, hunger: hunger + 10, thirst: thirst + 10, natureCalls: natureCalls + 10, sleepiness: sleepiness + 10 }
+        const stats = { boredom: boredom + 10, hunger: hunger + 5, thirst: thirst + 2, natureCalls: natureCalls + 10, sleepiness: sleepiness + 10 }
         const newValue = {}
 
         Object.entries(stats).map(([k, v]) => {

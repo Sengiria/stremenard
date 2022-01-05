@@ -6,7 +6,7 @@ import { selectPoopVisible } from '../../redux/gochi/gochi.selector';
 const Poop = ({poopVisible}) => {
     return (
         <div className='poop-box'>
-            <img className={`${poopVisible ? "active " : ""}poop`} alt="item" src={`images/poop.png`} />
+            <img className={`${poopVisible ? "active " : ""}poop`} alt="need" src={`images/poop.png`} />
         </div>
     );
 }

@@ -17,6 +17,11 @@ export const selectPoopVisible = createSelector(
   gochi => gochi.poopVisible
 );
 
+export const selectNeedVisible = createSelector(
+  [selectGochi],
+  gochi => gochi.needVisible
+);
+
 export const selectAsleep = createSelector(
   [selectGochi],
   gochi => gochi.asleep

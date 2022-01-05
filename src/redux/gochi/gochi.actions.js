@@ -17,6 +17,10 @@ export const togglePoopVisible = () => ({
     type: GochiActionTypes.TOGGLE_POOP_VISIBLE
 })
 
+export const toggleNeedVisible = () => ({
+    type: GochiActionTypes.TOGGLE_NEED_VISIBLE
+})
+
 export const setCurrentItem = item => ({
     type: GochiActionTypes.SET_CURRENT_ITEM,
     payload: item

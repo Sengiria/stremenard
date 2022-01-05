@@ -2,6 +2,7 @@ import { createStructuredSelector } from 'reselect';
 import Gochi from '../../components/gochi/gochi.component';
 import Item from '../../components/item/item.component';
 import Poop from '../../components/poop/poop.component';
+import Need from '../../components/need/need.component';
 import InteractionMenu from '../../components/interaction-menu/interaction-menu.component';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import './character-page.styles.scss';
@@ -11,18 +12,17 @@ import { connect } from 'react-redux';
 
 const CharacterPage = ({ currentUser }) => {
     const { gochiName, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
-    console.log(hunger)
+    const test = "I'm starving"
     return (
         <section className='split'>
-            <div className='character-screen'
-                style={{
-                    background: "url('images/character-bg.jpg')"
-                }}>
+            <div className='character-screen'>
                 <div className='card' >
                     <div className='image-box'>
                         <Item />
+                        <Need text={test} />
                         <Gochi />
                         <Poop />
+                        
                     </div>
                 </div>
             </div>
