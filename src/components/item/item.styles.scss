@@ -1,0 +1,19 @@
+.item-box {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+
+    .item {
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+
+    }
+
+    .active {
+        opacity: 1;
+
+    }
+}

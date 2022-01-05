@@ -6,7 +6,7 @@ $light-blue: #03a9f4;
     height: 100vh;
     display: flex;
 
-    .screen {
+    .character-screen {
         position: relative;
         flex-grow: 1;
         transition: 1s;
@@ -15,25 +15,38 @@ $light-blue: #03a9f4;
         align-items: center;
         overflow: hidden;
 
-        &:nth-child(2){
-            background: $light-green;
-        }
-
         .card {
             max-width: 300px;
             text-align: center;
             transition: 0.5s;
+            
 
             .image-box {
-                width: 200px;
-                height: 200px;
-                overflow: hidden;
+                width: 450px;
+                height: 450px;
+                //overflow: hidden;
                 margin: 0 auto;
+
 
                 img {
                     max-width: 100%;
+
                 }
             }
         }
     }
+
+    .interaction-screen {
+        padding: 10px;
+            background: $light-green;
+            flex-grow: 1;
+
+            .menu {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+       }
 }

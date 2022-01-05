@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import SignIn from './pages/authentication/sign-in.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
@@ -10,8 +10,12 @@ import { connect } from 'react-redux';
 import CharacterPage from './pages/character-page/character-page.component';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+  }
   unsubscribeFromAuth = null
   unsubscribeFromSnapshot = null;
+
 
   componentDidMount(){
     const { setCurrentUser } = this.props
@@ -38,11 +42,12 @@ class App extends Component {
   }
 
   render() { 
+    const { currentUser } = this.props
     return ( 
       <div className="App">
       <Routes>
-        <Route path="/signin" element={<SignIn/>} />
-        <Route path="/" element={<CharacterPage/>} />
+        <Route path="/signin" element={currentUser ? <Navigate replace to="/" /> : <SignIn /> } />
+        <Route path="/" element={currentUser ? <CharacterPage/> : <Navigate replace to="/signin" />} />
       </Routes>
     </div>
      );

@@ -1,0 +1,31 @@
+import GochiActionTypes from "./gochi.types";
+
+const INITIAL_STATE = {
+    currentAnimation: 'walk',
+    itemVisible: false,
+    currentItem: ''
+}
+
+const gochiReducer = (state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case GochiActionTypes.SET_CURRENT_ANIMATION:
+            return {
+                ...state,
+                currentAnimation: action.payload
+            }
+            case GochiActionTypes.TOGGLE_ITEM_VISIBLE:
+                return {
+                    ...state,
+                    itemVisible: !state.itemVisible
+                }
+                case GochiActionTypes.SET_CURRENT_ITEM:
+                    return {
+                        ...state,
+                        currentItem: action.payload
+                    }
+        default:
+            return state;
+    }
+}
+
+export default gochiReducer;

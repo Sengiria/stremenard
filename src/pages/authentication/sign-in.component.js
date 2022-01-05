@@ -43,7 +43,7 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
                 try {
                     const { user } = await signup(email, password)
 
-                    await createUserProfileDocument(user, { displayName, gochi })
+                    await createUserProfileDocument(user, gochi, { displayName })
 
                     this.setUserCredentials({
                         displayName: '',

@@ -11,3 +11,4 @@ export const selectHasAccount = createSelector(
   [selectUser],
   user => user.hasAccount
 );
+
