@@ -9,11 +9,12 @@ import { selectCurrentUser } from '../../redux/user/user.selector';
 import { ImExit } from "react-icons/im";
 import { setCurrentAnimation, setCurrentItem, toggleAsleep, toggleItemVisible, togglePoopVisible } from '../../redux/gochi/gochi.actions';
 import { useEffect, useState } from 'react';
-import { selectAsleep } from '../../redux/gochi/gochi.selector';
+import { selectAsleep, selectPoopVisible } from '../../redux/gochi/gochi.selector';
 
-const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemVisible, toggleAsleep, togglePoopVisible, setCurrentItem }) => {
+const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation, toggleItemVisible, toggleAsleep, togglePoopVisible, setCurrentItem }) => {
     const { name, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
     const [seconds, setSeconds] = useState(0)
+
 
     useEffect(() => {
         let myInterval = setInterval(() => {
@@ -76,12 +77,11 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         }, 2000);
     }
     const feedGochi = e => {
-        e.preventDefault()
         const newHunger = hunger - 10
         const newNatureCalls = natureCalls + 20
         const newValue = { hunger: newHunger, natureCalls: newNatureCalls }
 
-        if (newHunger >= 0 && newNatureCalls >= 0) {
+        if (newHunger >= 0 && newNatureCalls <= 100) {
             setCurrentItem('pizza.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -93,7 +93,7 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         const newNatureCalls = natureCalls + 20
         const newValue = { thirst: newThirst, natureCalls: newNatureCalls }
 
-        if (newThirst >= 0 && newNatureCalls >= 0) {
+        if (newThirst >= 0 && newNatureCalls <= 100) {
             setCurrentItem('water.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -101,7 +101,6 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         }
     }
     const playWithGochi = e => {
-        e.preventDefault()
         const newBoredom = boredom - 10
         const newSleepiness = sleepiness + 10
         const newValue = { boredom: newBoredom, sleepiness: newSleepiness }
@@ -115,17 +114,19 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         }
     }
     const cleanGochi = e => {
-        e.preventDefault()
-        setCurrentItem('broom.png')
-        updateGochi(currentUser.id, null, xp, level, 10)
-        switchAnimation('bigjump')
-        togglePoopVisible()
+        if(poopVisible){
+            setCurrentItem('broom.png')
+            updateGochi(currentUser.id, null, xp, level, 10)
+            switchAnimation('bigjump')
+            togglePoopVisible()
+        }
     }
     const wakeGochi = e => {
-        e.preventDefault()
-        toggleAsleep()
-        switchAnimation('wakeUp')
-        setCurrentItem('clock.png')
+        if(asleep){
+            toggleAsleep()
+            switchAnimation('wakeUp')
+            setCurrentItem('clock.png')
+        }
     }
     const sleep = () => {
         setCurrentAnimation('sleep')
@@ -133,9 +134,9 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
     }
     const naturesCall = () => {
         switchAnimation('naturesCall')
-        setTimeout(() => {
+        //setTimeout(() => {
             togglePoopVisible()
-        }, 1500);
+        //}, 1500);
 
         const newValue = { natureCalls: 0 }
         updateGochi(currentUser.id, newValue, xp, level, 50)
@@ -201,7 +202,8 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
-    asleep: selectAsleep
+    asleep: selectAsleep,
+    poopVisible: selectPoopVisible
 })
 
 const mapDispatchToProps = dispatch => ({

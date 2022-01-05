@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 const CharacterPage = ({ currentUser }) => {
     const { gochiName, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
-
+    console.log(hunger)
     return (
         <section className='split'>
             <div className='character-screen'
@@ -57,15 +57,15 @@ const CharacterPage = ({ currentUser }) => {
                     </div>
                     <div className='stat-box'>
                         <span>Hunger:</span>
-                        <ProgressBar currentValue={boredom} maxValue={100}/>
+                        <ProgressBar currentValue={hunger} maxValue={100}/>
                     </div>
                     <div className='stat-box'>
                         <span>Thirst:</span>
-                        <ProgressBar currentValue={boredom} maxValue={100}/>
+                        <ProgressBar currentValue={thirst} maxValue={100}/>
                     </div>
                     <div className='stat-box'>
                         <span>Nature Calls:</span>
-                        <ProgressBar currentValue={boredom} maxValue={100}/> 
+                        <ProgressBar currentValue={natureCalls} maxValue={100}/> 
                     </div>
                 </div>
 
