@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/stremenard/static/css/main.c40cfe16.css",
-    "main.js": "/stremenard/static/js/main.eadd6b50.js",
+    "main.css": "/stremenard/static/css/main.239c2971.css",
+    "main.js": "/stremenard/static/js/main.f3b84a46.js",
     "static/media/character-bg.jpg": "/stremenard/static/media/character-bg.60fbc2f1227bd797279d.jpg",
     "index.html": "/stremenard/index.html",
-    "main.c40cfe16.css.map": "/stremenard/static/css/main.c40cfe16.css.map",
-    "main.eadd6b50.js.map": "/stremenard/static/js/main.eadd6b50.js.map"
+    "main.239c2971.css.map": "/stremenard/static/css/main.239c2971.css.map",
+    "main.f3b84a46.js.map": "/stremenard/static/js/main.f3b84a46.js.map"
   },
   "entrypoints": [
-    "static/css/main.c40cfe16.css",
-    "static/js/main.eadd6b50.js"
+    "static/css/main.239c2971.css",
+    "static/js/main.f3b84a46.js"
   ]
 }
