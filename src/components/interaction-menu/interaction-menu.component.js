@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import { ImExit } from "react-icons/im";
-import { setCurrentAnimation, setCurrentItem, toggleAsleep, toggleItemVisible } from '../../redux/gochi/gochi.actions';
+import { setCurrentAnimation, setCurrentItem, toggleAsleep, toggleItemVisible, togglePoopVisible } from '../../redux/gochi/gochi.actions';
 import { useEffect, useState } from 'react';
 import { selectAsleep } from '../../redux/gochi/gochi.selector';
 
-const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemVisible, toggleAsleep, setCurrentItem }) => {
+const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemVisible, toggleAsleep, togglePoopVisible, setCurrentItem }) => {
     const { name, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
     const [seconds, setSeconds] = useState(0)
 
@@ -34,13 +34,13 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         useEffect(()=>{
             let myInterval = setInterval(() => {
                     if (asleep) {
-                        const newSleepiness = sleepiness - 5
+                        const newSleepiness = sleepiness - 10
                         const newValue = {sleepiness: newSleepiness}
                         if (newSleepiness >= 0) {
                             updateGochi(currentUser.id, newValue, xp, level, 0)
                         }else {
                             toggleAsleep()
-                            setCurrentAnimation('walk')
+                            switchAnimation('wakeUp')
                         }
                     }else {
                         clearInterval(myInterval)
@@ -59,6 +59,13 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
 
         }, [sleepiness])
 
+        useEffect(() => {
+            if(natureCalls === 100){
+                naturesCall()
+            } 
+
+        }, [natureCalls])
+
     const switchAnimation = (anim) => {
         setCurrentAnimation(anim)
         toggleItemVisible()
@@ -71,9 +78,10 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
     const feedGochi = e => {
         e.preventDefault()
         const newHunger = hunger - 10
-        const newValue = {hunger: newHunger, natureCalls: natureCalls + 20}
+        const newNatureCalls = natureCalls + 20
+        const newValue = {hunger: newHunger, natureCalls: newNatureCalls}
 
-        if (newHunger >= 0) {
+        if (newHunger >= 0 && newNatureCalls >= 0) {
             setCurrentItem('pizza.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -85,7 +93,7 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         const newNatureCalls = natureCalls + 20
         const newValue = {thirst: newThirst, natureCalls: newNatureCalls}
 
-        if (newThirst >= 0) {
+        if (newThirst >= 0 && newNatureCalls >= 0) {
             setCurrentItem('water.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -111,11 +119,12 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
             setCurrentItem('broom.png')
             updateGochi(currentUser.id, null, xp, level, 10)
             switchAnimation('bigjump')
+            togglePoopVisible()
     }
     const wakeGochi = e => {
         e.preventDefault()
         toggleAsleep()
-        switchAnimation('hurt')
+        switchAnimation('wakeUp')
         setCurrentItem('clock.png')
     }
     const sleep = () => {
@@ -123,7 +132,13 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         toggleAsleep()
     }
     const naturesCall = () => {
-
+        switchAnimation('naturesCall')
+        setTimeout(() => {
+            togglePoopVisible()
+        }, 1500);
+        
+        const newValue = {natureCalls: 0}
+        updateGochi(currentUser.id, newValue, xp, level, 50)
     }
     const increaseStats = () => {
         const stats = {boredom: boredom + 10, hunger: hunger + 10, thirst: thirst + 10, natureCalls: natureCalls + 10, sleepiness: sleepiness + 10}
@@ -135,7 +150,6 @@ const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemV
         })
         
         if (newValue !== {}) {
-            setCurrentItem('broom.png')
             updateGochi(currentUser.id, newValue, xp, level, 0)
         }
     }
@@ -193,6 +207,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     setCurrentAnimation: (anim) => dispatch(setCurrentAnimation(anim)),
     toggleItemVisible: () => dispatch(toggleItemVisible()),
+    togglePoopVisible: () => dispatch(togglePoopVisible()),
     setCurrentItem: (item) => dispatch(setCurrentItem(item)),
     toggleAsleep: () => dispatch(toggleAsleep())
 })
