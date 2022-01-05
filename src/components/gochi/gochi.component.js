@@ -10,7 +10,7 @@ const Gochi = ({currentUser, currentAnimation}) => {
     return ( 
         <img
         className='gochi' 
-        src={`images/characters/${type}/${currentAnimation}.gif`} />
+        src={`stremenard/images/characters/${type}/${currentAnimation}.gif`} />
      );
 }
 

@@ -6,7 +6,7 @@ import { selectCurrentItem, selectItemVisible } from '../../redux/gochi/gochi.se
 const Item = ({itemVisible, currentItem}) => {
     return (
         <div className='item-box'>
-            <img className={`${itemVisible ? "active " : ""}item`} alt="item" src={`images/${currentItem}`} />
+            <img className={`${itemVisible ? "active " : ""}item`} alt="item" src={`stremenard/images/${currentItem}`} />
         </div>
 
     );

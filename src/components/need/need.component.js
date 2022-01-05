@@ -6,7 +6,7 @@ import './need.styles.scss';
 const Need = ({ needVisible, need }) => {
     return (
         <div className='need-box'>
-            <img className={`${needVisible ? "active " : ""}need`} alt="need" src={`images/think.png`} />
+            <img className={`${needVisible ? "active " : ""}need`} alt="need" src={`stremenard/images/think.png`} />
             <span className={`${needVisible ? "active " : ""}need`}>{need}</span>
         </div>
     )
