@@ -47,7 +47,7 @@ $light-blue: #03a9f4;
             h2 {
                 color: #607d8b;
                 font-weight: 600;
-                font-size: 1.5em;
+                font-size: 2.5em;
                 text-transform: uppercase;
                 margin-bottom: 20px;
                 border-bottom: 4px solid $light-green;
@@ -59,7 +59,7 @@ $light-blue: #03a9f4;
                 margin-bottom: 20px;
 
                 span {
-                    font-size: 16px;
+                    font-size: 1.4em;
                     margin-bottom: 5px;
                     display: inline-block;
                     color: #607db8;
@@ -98,24 +98,23 @@ $light-blue: #03a9f4;
                     color: #607d8b;
 
                     a {
-                        color: $light-green
+                        color: $light-green;
+                        margin-left: 10px;
                     }
                 }
 
                 .starter-character {
-                    width: 50px;
-                    height: 50px;
+                    width: 60px;
+                    height: 60px;
                     cursor: pointer;
                 }
-
             }
 
             .remember {
                 margin-bottom: 10px;
                 color: #607d8b;
                 font-weight: 400;
-                font-size: 14px;
-                
+                font-size: 1.3em;
             }
 
             h3 {
@@ -123,6 +122,7 @@ $light-blue: #03a9f4;
                 text-align: center;
                 margin: 80px 0 10px;
                 font-weight: 500;
+                font-size: 1.5em;
             }
 
             .sci {
@@ -140,8 +140,8 @@ $light-blue: #03a9f4;
                     cursor: pointer;
 
                     img {
-                        width: 40px;
-                        height: 40px;
+                        width: 60px;
+                        height: 60px;
                     }
                 }
             }
@@ -152,7 +152,6 @@ $light-blue: #03a9f4;
 
 @media (max-width: 768px){
     section {
-
         .image-box{
             position: absolute;
             top: 0;

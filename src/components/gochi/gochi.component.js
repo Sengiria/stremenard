@@ -8,9 +8,11 @@ const Gochi = ({currentUser, currentAnimation}) => {
     const {type} = currentUser
 
     return ( 
+        <div className='gochi-box'>
         <img
         className='gochi' 
         src={`stremenard/images/characters/${type}/${currentAnimation}.gif`} />
+        </div>
      );
 }
 
