@@ -12,14 +12,14 @@ import { connect } from 'react-redux';
 
 const CharacterPage = ({ currentUser }) => {
     const { gochiName, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
-    const test = "I'm starving"
+
     return (
         <section className='split'>
             <div className='character-screen'>
                 <div className='card' >
                     <div className='image-box'>
                         <Item />
-                        <Need text={test} />
+                        <Need />
                         <Gochi />
                         <Poop />
                         

@@ -32,6 +32,11 @@ export const selectCurrentItem = createSelector(
   gochi => gochi.currentItem
 );
 
+export const selectNeed = createSelector(
+  [selectGochi],
+  gochi => gochi.need
+);
+
 
 
 

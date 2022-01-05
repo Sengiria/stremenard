@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import { ImExit } from "react-icons/im";
-import { setCurrentAnimation, setCurrentItem, toggleAsleep, toggleItemVisible, togglePoopVisible } from '../../redux/gochi/gochi.actions';
+import { setCurrentAnimation, setCurrentItem, setNeed, toggleAsleep, toggleItemVisible, toggleNeedVisible, togglePoopVisible } from '../../redux/gochi/gochi.actions';
 import { useEffect, useState } from 'react';
 import { selectAsleep, selectPoopVisible } from '../../redux/gochi/gochi.selector';
 
-const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation, toggleItemVisible, toggleAsleep, togglePoopVisible, setCurrentItem }) => {
+const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep, togglePoopVisible, toggleNeedVisible, setCurrentItem }) => {
     const { name, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
     const [seconds, setSeconds] = useState(0)
 
@@ -67,6 +67,32 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
 
     }, [natureCalls])
 
+    useEffect(() => {
+        if (boredom === 100) {
+            setNeed("I'm soooo boooored!")
+            toggleNeedVisible()
+            setTimeout(() => {
+                toggleNeedVisible()
+            }, 3000);
+        }
+        if (hunger === 100) {
+            console.log('hunger is full')
+            setNeed("I'm starving!")
+            toggleNeedVisible()
+            setTimeout(() => {
+                toggleNeedVisible()
+            }, 3000);
+        }
+        if (thirst === 100) {
+            setNeed("I'm thirsty!")
+            toggleNeedVisible()
+            setTimeout(() => {
+                toggleNeedVisible()
+            }, 3000);
+        }
+
+    }, [boredom, hunger, thirst])
+
     const switchAnimation = (anim) => {
         setCurrentAnimation(anim)
         toggleItemVisible()
@@ -81,7 +107,13 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
         const newNatureCalls = natureCalls + 20
         const newValue = { hunger: newHunger, natureCalls: newNatureCalls }
 
-        if (newHunger >= 0 && newNatureCalls <= 100) {
+        if (poopVisible) {
+            setNeed("Clean me first!")
+            toggleNeedVisible()
+            setTimeout(() => {
+                toggleNeedVisible()
+            }, 3000);
+        }else if (newHunger >= 0 && newNatureCalls <= 100) {
             setCurrentItem('pizza.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -114,7 +146,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
         }
     }
     const cleanGochi = e => {
-        if(poopVisible){
+        if (poopVisible) {
             setCurrentItem('broom.png')
             updateGochi(currentUser.id, null, xp, level, 10)
             switchAnimation('bigjump')
@@ -122,7 +154,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
         }
     }
     const wakeGochi = e => {
-        if(asleep){
+        if (asleep) {
             toggleAsleep()
             switchAnimation('wakeUp')
             setCurrentItem('clock.png')
@@ -135,7 +167,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
     const naturesCall = () => {
         switchAnimation('naturesCall')
         //setTimeout(() => {
-            togglePoopVisible()
+        togglePoopVisible()
         //}, 1500);
 
         const newValue = { natureCalls: 0 }
@@ -211,7 +243,9 @@ const mapDispatchToProps = dispatch => ({
     toggleItemVisible: () => dispatch(toggleItemVisible()),
     togglePoopVisible: () => dispatch(togglePoopVisible()),
     setCurrentItem: (item) => dispatch(setCurrentItem(item)),
-    toggleAsleep: () => dispatch(toggleAsleep())
+    toggleAsleep: () => dispatch(toggleAsleep()),
+    toggleNeedVisible: () => dispatch(toggleNeedVisible()),
+    setNeed: (need) => dispatch(setNeed(need))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(InteractionMenu);

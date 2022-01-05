@@ -26,4 +26,9 @@ export const setCurrentItem = item => ({
     payload: item
 })
 
+export const setNeed = need => ({
+    type: GochiActionTypes.SET_NEED,
+    payload: need
+})
+
 
