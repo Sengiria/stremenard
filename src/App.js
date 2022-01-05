@@ -45,8 +45,8 @@ class App extends Component {
     return ( 
       <div className="App">
       <Routes>
-        <Route path="/signin" element={currentUser ? <Navigate replace to="/" /> : <SignIn /> } />
-        <Route path="/" element={currentUser ? <CharacterPage/> : <Navigate replace to="/signin" />} />
+        <Route path="/stremenard/signin" element={currentUser ? <Navigate replace to="/stremenard" /> : <SignIn /> } />
+        <Route path="/stremenard" element={currentUser ? <CharacterPage/> : <Navigate replace to="/stremenard/signin" />} />
       </Routes>
     </div>
      );

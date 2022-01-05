@@ -113,19 +113,24 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
             setTimeout(() => {
                 toggleNeedVisible()
             }, 3000);
-        }else if (newHunger >= 0 && newNatureCalls <= 100) {
+        } else if (newHunger >= 0 && newNatureCalls <= 100) {
             setCurrentItem('pizza.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
         }
     }
     const giveGochiWater = e => {
-        e.preventDefault()
         const newThirst = thirst - 10
         const newNatureCalls = natureCalls + 20
         const newValue = { thirst: newThirst, natureCalls: newNatureCalls }
 
-        if (newThirst >= 0 && newNatureCalls <= 100) {
+        if (poopVisible) {
+            setNeed("Clean me first!")
+            toggleNeedVisible()
+            setTimeout(() => {
+                toggleNeedVisible()
+            }, 3000);
+        } else if (newThirst >= 0 && newNatureCalls <= 100) {
             setCurrentItem('water.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -137,7 +142,13 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
         const newSleepiness = sleepiness + 10
         const newValue = { boredom: newBoredom, sleepiness: newSleepiness }
 
-        if (newBoredom >= 0 && newSleepiness <= 100) {
+        if (poopVisible) {
+            setNeed("Clean me first!")
+            toggleNeedVisible()
+            setTimeout(() => {
+                toggleNeedVisible()
+            }, 3000);
+        } else if (newBoredom >= 0 && newSleepiness <= 100) {
             updateGochi(currentUser.id, newValue, xp, level, 50)
             if (newSleepiness !== 100) {
                 setCurrentItem('ball.png')
