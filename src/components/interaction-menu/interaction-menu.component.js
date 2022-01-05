@@ -7,10 +7,57 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import { ImExit } from "react-icons/im";
-import { setCurrentAnimation, setCurrentItem, toggleItemVisible } from '../../redux/gochi/gochi.actions';
+import { setCurrentAnimation, setCurrentItem, toggleAsleep, toggleItemVisible } from '../../redux/gochi/gochi.actions';
+import { useEffect, useState } from 'react';
+import { selectAsleep } from '../../redux/gochi/gochi.selector';
 
-const InteractionMenu = ({ currentUser, setCurrentAnimation, toggleItemVisible, setCurrentItem }) => {
+const InteractionMenu = ({ currentUser, asleep, setCurrentAnimation, toggleItemVisible, toggleAsleep, setCurrentItem }) => {
     const { name, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
+    const [seconds, setSeconds] = useState(0)
+
+    useEffect(()=>{
+        let myInterval = setInterval(() => {
+                if (seconds < 60) {
+                    setSeconds(seconds + 5);
+                }
+                if (seconds === 60) {
+                    setSeconds(0);
+                    increaseStats()
+                    clearInterval(myInterval)
+                } 
+            }, 1000)
+            return ()=> {
+                clearInterval(myInterval);
+              };
+        });
+
+        useEffect(()=>{
+            let myInterval = setInterval(() => {
+                    if (asleep) {
+                        const newSleepiness = sleepiness - 5
+                        const newValue = {sleepiness: newSleepiness}
+                        if (newSleepiness >= 0) {
+                            updateGochi(currentUser.id, newValue, xp, level, 0)
+                        }else {
+                            toggleAsleep()
+                            setCurrentAnimation('walk')
+                        }
+                    }else {
+                        clearInterval(myInterval)
+                        
+                    } 
+                }, 1000)
+                return ()=> {
+                    clearInterval(myInterval);
+                  };
+            });
+
+        useEffect(() => {
+            if(sleepiness === 100){
+                sleep()
+            } 
+
+        }, [sleepiness])
 
     const switchAnimation = (anim) => {
         setCurrentAnimation(anim)
@@ -23,58 +70,81 @@ const InteractionMenu = ({ currentUser, setCurrentAnimation, toggleItemVisible, 
     }
     const feedGochi = e => {
         e.preventDefault()
-        const newValue = hunger + 20
-        if (newValue >= 0) {
+        const newHunger = hunger - 10
+        const newValue = {hunger: newHunger, natureCalls: natureCalls + 20}
+
+        if (newHunger >= 0) {
             setCurrentItem('pizza.png')
-            updateGochi(currentUser.id, 'hunger', newValue, xp, level, 20)
+            updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
-
         }
     }
-    const giveGochiWater = () => {
-        const newValue = thirst - 20
-        if (newValue >= 0) {
+    const giveGochiWater = e => {
+        e.preventDefault()
+        const newThirst = thirst - 10
+        const newNatureCalls = natureCalls + 20
+        const newValue = {thirst: newThirst, natureCalls: newNatureCalls}
+
+        if (newThirst >= 0) {
             setCurrentItem('water.png')
-            updateGochi(currentUser.id, 'thirst', newValue, xp, level, 20)
+            updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
 
         }
     }
-    const playWithGochi = () => {
-        const newValue = boredom - 20
-        if (newValue >= 0) {
-            setCurrentItem('ball.png')
-            updateGochi(currentUser.id, 'boredom', boredom, xp, level, 50)
-            switchAnimation('jump')
+    const playWithGochi = e => {
+        e.preventDefault()
+        const newBoredom = boredom - 10
+        const newSleepiness = sleepiness + 10
+        const newValue = {boredom: newBoredom, sleepiness: newSleepiness}
+
+        if (newBoredom >= 0 && newSleepiness <= 100) {
+            updateGochi(currentUser.id, newValue, xp, level, 50)
+            if(newSleepiness !== 100){
+                setCurrentItem('ball.png')
+                switchAnimation('jump')
+            }
         }
     }
-    const cleanGochi = () => {
-        const newValue = natureCalls - 20
-        if (newValue >= 0) {
+    const cleanGochi = e => {
+        e.preventDefault()
             setCurrentItem('broom.png')
-            updateGochi(currentUser.id, 'natureCalls', newValue, xp, level, 10)
+            updateGochi(currentUser.id, null, xp, level, 10)
             switchAnimation('bigjump')
-        }
     }
-    const wakeGochi = () => {
-        const newValue = sleepiness - 20
-        if (newValue >= 0)
+    const wakeGochi = e => {
+        e.preventDefault()
+        toggleAsleep()
+        switchAnimation('hurt')
         setCurrentItem('clock.png')
-        updateGochi(currentUser.id, 'sleepiness', newValue, xp, level, 0)
     }
     const sleep = () => {
-
+        setCurrentAnimation('sleep')
+        toggleAsleep()
     }
-
     const naturesCall = () => {
 
+    }
+    const increaseStats = () => {
+        const stats = {boredom: boredom + 10, hunger: hunger + 10, thirst: thirst + 10, natureCalls: natureCalls + 10, sleepiness: sleepiness + 10}
+        const newValue = {}
+
+        Object.entries(stats).map(([k, v]) => {
+            if(v <= 100)
+            newValue[k] = v
+        })
+        
+        if (newValue !== {}) {
+            setCurrentItem('broom.png')
+            updateGochi(currentUser.id, newValue, xp, level, 0)
+        }
     }
 
     return (
         <div className="navigation" >
             <ul>
-                <li onClick={feedGochi} className='list'>
-                    <Link to="#"  >
+                <li  className='list'>
+                    <Link to="#" onClick={feedGochi} >
                         <span className='icon'><FaPizzaSlice /></span>
                         <span className='title'>Food</span>
                     </Link>
@@ -116,13 +186,15 @@ const InteractionMenu = ({ currentUser, setCurrentAnimation, toggleItemVisible, 
 }
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
+    currentUser: selectCurrentUser,
+    asleep: selectAsleep
 })
 
 const mapDispatchToProps = dispatch => ({
     setCurrentAnimation: (anim) => dispatch(setCurrentAnimation(anim)),
     toggleItemVisible: () => dispatch(toggleItemVisible()),
-    setCurrentItem: (item) => dispatch(setCurrentItem(item))
+    setCurrentItem: (item) => dispatch(setCurrentItem(item)),
+    toggleAsleep: () => dispatch(toggleAsleep())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(InteractionMenu);

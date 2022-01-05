@@ -48,5 +48,14 @@ $light-blue: #03a9f4;
                 margin: 0 auto;
             }
 
+            .stats {
+                display: flex;
+                flex-direction: column;
+
+                .stat-box{
+                    
+                }
+            }
+
        }
 }

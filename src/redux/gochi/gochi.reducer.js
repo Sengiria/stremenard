@@ -3,7 +3,9 @@ import GochiActionTypes from "./gochi.types";
 const INITIAL_STATE = {
     currentAnimation: 'walk',
     itemVisible: false,
-    currentItem: ''
+    poopVisible: false,
+    currentItem: '',
+    asleep: false
 }
 
 const gochiReducer = (state = INITIAL_STATE, action) => {
@@ -13,16 +15,26 @@ const gochiReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 currentAnimation: action.payload
             }
-            case GochiActionTypes.TOGGLE_ITEM_VISIBLE:
-                return {
-                    ...state,
-                    itemVisible: !state.itemVisible
-                }
-                case GochiActionTypes.SET_CURRENT_ITEM:
-                    return {
-                        ...state,
-                        currentItem: action.payload
-                    }
+        case GochiActionTypes.TOGGLE_ITEM_VISIBLE:
+            return {
+                ...state,
+                itemVisible: !state.itemVisible
+            }
+        case GochiActionTypes.TOGGLE_POOP_VISIBLE:
+            return {
+                ...state,
+                poopVisible: !state.poopVisible
+            }
+        case GochiActionTypes.TOGGLE_ASLEEP:
+            return {
+                ...state,
+                asleep: !state.asleep
+            }
+        case GochiActionTypes.SET_CURRENT_ITEM:
+            return {
+                ...state,
+                currentItem: action.payload
+            }
         default:
             return state;
     }

@@ -1,0 +1,17 @@
+.poop-box {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 auto;
+
+    .poop {
+        width: 40px;
+        height: 40px;
+        opacity: 0;
+    }
+
+    .active {
+        opacity: 1;
+    }
+}

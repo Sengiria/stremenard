@@ -40,11 +40,11 @@ export const createUserProfileDocument = async ( userAuth, gochi, additionalData
           type,
           xp: 0,
           level: 1,
-          hunger: 0,
-          thirst: 0,
-          natureCalls: 0,
-          sleepiness: 0,
-          boredom: 0,
+          hunger: 40,
+          thirst: 40,
+          natureCalls: 40,
+          sleepiness: 40,
+          boredom: 40,
           ...additionalData
           
         })
@@ -69,7 +69,7 @@ export const xpSystem = {
   10: 1350
 }
 
-export const updateGochi = async (userId, name, value, xp, level, xpToAdd) => {
+export const updateGochi = async (userId, changedAttributes, xp, level, xpToAdd) => {
   const gochiRef = firestore.collection(`users`).doc(userId);
 
     const xpNeeded = xpSystem[level]
@@ -77,7 +77,7 @@ export const updateGochi = async (userId, name, value, xp, level, xpToAdd) => {
 
   try {
     await gochiRef.update({
-     [name]: value,
+     ...changedAttributes,
      xp: sum >= xpNeeded ? sum - xpNeeded : sum,
      level: sum >= xpNeeded ? level + 1 : level
     })
