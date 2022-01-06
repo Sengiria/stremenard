@@ -64,7 +64,6 @@ $light-blue: #03a9f4;
                     display: inline-block;
                     color: #607db8;
                     font-weight: 300;
-                    font-size: 16px;
                     letter-spacing: 1px;
                 }
 
@@ -96,6 +95,7 @@ $light-blue: #03a9f4;
 
                 p {
                     color: #607d8b;
+                    font-size: 1.5em;
 
                     a {
                         color: $light-green;
