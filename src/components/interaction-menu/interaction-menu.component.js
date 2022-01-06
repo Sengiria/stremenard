@@ -113,7 +113,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
             setTimeout(() => {
                 toggleNeedVisible()
             }, 3000);
-        } else if (newHunger >= 0 && newNatureCalls <= 100) {
+        } else if (newHunger >= 0 && natureCalls <= 100) {
             setCurrentItem('pizza.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -130,7 +130,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
             setTimeout(() => {
                 toggleNeedVisible()
             }, 3000);
-        } else if (newThirst >= 0 && newNatureCalls <= 100) {
+        } else if (newThirst >= 0 && natureCalls <= 100) {
             setCurrentItem('water.png')
             updateGochi(currentUser.id, newValue, xp, level, 20)
             switchAnimation('happy')
@@ -160,7 +160,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
         if (poopVisible) {
             setCurrentItem('broom.png')
             updateGochi(currentUser.id, null, xp, level, 10)
-            switchAnimation('bigjump')
+            switchAnimation('bigJump')
             togglePoopVisible()
         }
     }
