@@ -6,11 +6,13 @@ import { selectHasAccount } from '../../redux/user/user.selector';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import './sign-in.styles.scss'
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = ({ toggleHasAccount, hasAccount }) => {
-
+    
+    let navigate = useNavigate()
     const [userCredentials, setUserCredentials] = useState({ displayName: '', email: '', password: '', passwordAgain: '' })
-    const [gochi, setGochi] = useState({name: '', type: ''})
+    const [gochi, setGochi] = useState({gochiName: '', type: ''})
 
     const handleChange = e => {
         const { value, name } = e.target
@@ -22,7 +24,7 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
     }
     const nameGochi = e => {
         const { value } = e.target
-        setGochi({ ...gochi, name: value })
+        setGochi({ ...gochi, gochiName: value })
     }
     const handleSubmit = async e => {
         e.preventDefault()
@@ -51,6 +53,7 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
                         password: '',
                         confirmPassword: ''
                     });
+                    navigate('/stremenard')
                 } catch (error) {
                     console.log(error)
                 }
@@ -157,18 +160,6 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
                         </div>
 
                     </form>
-                    {
-                        hasAccount &&
-                        (
-                            <>
-                                <h3>Login with Social media</h3>
-                                <ul className='sci'>
-                                    <li><img src="images/google.png" alt="google" /></li>
-                                    <li><img src="images/facebook.png" alt="facebook" /></li>
-                                </ul>
-                            </>
-                        )
-                    }
                 </div>
             </div>
         </section>

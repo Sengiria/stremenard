@@ -21,14 +21,13 @@ export const firestore = firebase.firestore();
 export const createUserProfileDocument = async ( userAuth, gochi, additionalData ) => {
     if( !userAuth ) return;
 
-    console.log(additionalData)
+    console.log(gochi)
   
     const userRef = firestore.doc(`users/${userAuth.uid}`);
     const snapShot = await userRef.get()
   
     if ( !snapShot.exists ) {
       const { displayName, email } = userAuth
-      const { name, type } = gochi
       const createdAt = new Date();
       
       try {
@@ -36,8 +35,7 @@ export const createUserProfileDocument = async ( userAuth, gochi, additionalData
           displayName,
           email,
           createdAt,
-          gochiName: name,
-          type,
+          ...gochi,
           xp: 0,
           level: 1,
           hunger: 40,

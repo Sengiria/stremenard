@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { selectAsleep, selectPoopVisible } from '../../redux/gochi/gochi.selector';
 
 const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep, togglePoopVisible, toggleNeedVisible, setCurrentItem }) => {
-    const { name, type, boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
+    const { boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
     const [seconds, setSeconds] = useState(0)
 
 
