@@ -60,7 +60,6 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
             }
         }
     }
-
     return (
         <section className='sign-in'>
             <div className="sign-in-image-box">
