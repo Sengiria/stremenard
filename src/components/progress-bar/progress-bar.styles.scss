@@ -19,3 +19,17 @@
     border-radius: inherit;
     transition: width .2s ease-in;
   }
+
+
+  @media (max-width: 768px){
+    .progress-bar {
+      width: 80px;
+      span {
+
+      }
+    }
+    
+    .filler {
+
+    }
+  }

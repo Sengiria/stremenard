@@ -8,3 +8,16 @@
     width: 300px;
     height: 300px;
 }
+
+
+
+@media (max-width: 768px){
+    .gochi-box {
+        width: 50%;
+        margin: 0;
+    }
+    .gochi {
+        width: 180px;
+        height: 180px;
+    }
+}

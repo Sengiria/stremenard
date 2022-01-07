@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { signInWithEmailAndPass, signInWithGoogle, signup, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signInWithEmailAndPass, signup, createUserProfileDocument } from '../../firebase/firebase.utils';
 import { toggleHasAccount } from '../../redux/user/user.actions';
 import { selectHasAccount } from '../../redux/user/user.selector';
 import { createStructuredSelector } from 'reselect';

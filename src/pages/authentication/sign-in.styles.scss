@@ -203,6 +203,7 @@ $light-blue: #03a9f4;
                 }
 
                 .input-box {
+                    margin-bottom: 10px;
                     span {
                         font-size: 1em;
                     }
@@ -217,6 +218,9 @@ $light-blue: #03a9f4;
                         }
                     }
 
+                    input {
+                        padding: 5px 20px;
+                    }
             }
 
             .remember {

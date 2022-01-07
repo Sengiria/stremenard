@@ -25,3 +25,20 @@
         opacity: 1;
     }
 }
+
+@media (max-width: 768px){
+    .need-box {
+        left: 0;
+    
+        .need {
+            width: 130px;
+            height: 100%;
+        }
+    
+        span{
+            top: 25px;
+            right: 150px;
+            font-size: 1em;
+        }
+    }
+}
