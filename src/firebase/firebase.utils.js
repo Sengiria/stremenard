@@ -3,13 +3,13 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
 const config = {
-    apiKey: "AIzaSyCn1zdgZxz2VaQrb0g0Qfdino7GFoX_rN0",
-    authDomain: "stremenard.firebaseapp.com",
-    projectId: "stremenard",
-    storageBucket: "stremenard.appspot.com",
-    messagingSenderId: "87209684297",
-    appId: "1:87209684297:web:796efd478df2e9332cbe98",
-    measurementId: "G-1PNTHF938Y"
+  apiKey: "AIzaSyCn1zdgZxz2VaQrb0g0Qfdino7GFoX_rN0",
+  authDomain: "stremenard.firebaseapp.com",
+  projectId: "stremenard",
+  storageBucket: "stremenard.appspot.com",
+  messagingSenderId: "87209684297",
+  appId: "1:87209684297:web:796efd478df2e9332cbe98",
+  measurementId: "G-1PNTHF938Y"
 };
 
 firebase.initializeApp(config)
@@ -18,40 +18,49 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 
-export const createUserProfileDocument = async ( userAuth, gochi, additionalData ) => {
-    if( !userAuth ) return;
+export const createUserProfileDocument = async (userAuth, gochi, additionalData) => {
+  if (!userAuth) return;
 
-    console.log(gochi)
-  
-    const userRef = firestore.doc(`users/${userAuth.uid}`);
-    const snapShot = await userRef.get()
-  
-    if ( !snapShot.exists ) {
-      const { displayName, email } = userAuth
-      const createdAt = new Date();
-      
-      try {
-        await userRef.set({
-          displayName,
-          email,
-          createdAt,
-          ...gochi,
-          xp: 0,
-          level: 1,
-          hunger: 40,
-          thirst: 40,
-          natureCalls: 40,
-          sleepiness: 40,
-          boredom: 40,
-          ...additionalData
-          
-        })
-      } catch (error) {
-        console.log(error)
-      }
+  console.log(gochi)
+
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  const snapShot = await userRef.get()
+
+  if (!snapShot.exists) {
+    const { displayName, email } = userAuth
+    const createdAt = new Date();
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...gochi,
+        xp: 0,
+        level: 1,
+        hunger: 40,
+        thirst: 40,
+        natureCalls: 40,
+        sleepiness: 40,
+        boredom: 40,
+        ...additionalData
+
+      })
+    } catch (error) {
+      console.log(error)
     }
-    return userRef;
   }
+  return userRef;
+}
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
 
 // update gochi data
 
@@ -77,17 +86,17 @@ export const xpSystem = {
 export const updateGochi = async (userId, changedAttributes, xp, level, xpToAdd) => {
   const gochiRef = firestore.collection(`users`).doc(userId);
 
-    const xpNeeded = xpSystem[level]
-    const sum = xp + xpToAdd
+  const xpNeeded = xpSystem[level]
+  const sum = xp + xpToAdd
 
   try {
     await gochiRef.update({
-     ...changedAttributes,
-     xp: sum >= xpNeeded ? sum - xpNeeded : sum,
-     level: sum >= xpNeeded ? level + 1 : level
+      ...changedAttributes,
+      xp: sum >= xpNeeded ? sum - xpNeeded : sum,
+      level: sum >= xpNeeded ? level + 1 : level
     })
   } catch (error) {
-    
+
   }
 }
 

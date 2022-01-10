@@ -12,3 +12,9 @@ export const selectHasAccount = createSelector(
   user => user.hasAccount
 );
 
+
+export const selectError = createSelector(
+  [selectUser],
+  user => user.error
+);
+

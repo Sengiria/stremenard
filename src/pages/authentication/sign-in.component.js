@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { signInWithEmailAndPass, signup, createUserProfileDocument } from '../../firebase/firebase.utils';
-import { toggleHasAccount } from '../../redux/user/user.actions';
-import { selectHasAccount } from '../../redux/user/user.selector';
+import { signup, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { toggleHasAccount, signInStart } from '../../redux/user/user.actions';
+import { selectError, selectHasAccount } from '../../redux/user/user.selector';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import './sign-in.styles.scss'
 import { useNavigate } from 'react-router-dom';
 
-const SignIn = ({ toggleHasAccount, hasAccount }) => {
-    
+const SignIn = ({ toggleHasAccount, hasAccount, signInStart, error }) => {
     let navigate = useNavigate()
     const [userCredentials, setUserCredentials] = useState({ displayName: '', email: '', password: '', passwordAgain: '' })
     const [gochi, setGochi] = useState({gochiName: '', type: ''})
@@ -31,12 +30,9 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
         const { displayName, email, password, passwordAgain } = userCredentials
 
         if (hasAccount) {
-            try {
-                await signInWithEmailAndPass(email, password)
-                setUserCredentials({ email: '', password: '' })
-            } catch (error) {
-                console.log(error)
-            }
+            signInStart(email, password);
+                //setUserCredentials({ email: '', password: '' })
+
         } else {
             if (password !== passwordAgain) {
                 alert("passwords don't match!")
@@ -69,6 +65,7 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
                 <div className="form-box">
 
                     <h2>{hasAccount ? "Login" : "Register"}</h2>
+                    <h3>{error}</h3>
                     <form onSubmit={handleSubmit}>
                         {
                             !hasAccount &&
@@ -166,11 +163,13 @@ const SignIn = ({ toggleHasAccount, hasAccount }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    hasAccount: selectHasAccount
+    hasAccount: selectHasAccount,
+    error: selectError
 });
 
 const mapDispatchToProps = dispatch => ({
-    toggleHasAccount: () => dispatch(toggleHasAccount())
+    toggleHasAccount: () => dispatch(toggleHasAccount()),
+    signInStart: (email, password) => dispatch(signInStart({email, password}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

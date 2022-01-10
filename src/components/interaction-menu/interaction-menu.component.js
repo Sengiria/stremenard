@@ -10,12 +10,15 @@ import { ImExit } from "react-icons/im";
 import { setCurrentAnimation, setCurrentItem, setNeed, toggleAsleep, toggleItemVisible, toggleNeedVisible, togglePoopVisible } from '../../redux/gochi/gochi.actions';
 import { useEffect, useState } from 'react';
 import { selectAsleep, selectPoopVisible } from '../../redux/gochi/gochi.selector';
+import { signOutStart } from '../../redux/user/user.actions';
 
-const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep, togglePoopVisible, toggleNeedVisible, setCurrentItem }) => {
+const InteractionMenu = ({ currentUser, asleep, poopVisible, 
+    setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep, 
+    togglePoopVisible, toggleNeedVisible, setCurrentItem, signOutStart }) => {
     const { boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
     const [seconds, setSeconds] = useState(0)
 
-
+    //increase stats by minute
     useEffect(() => {
         let myInterval = setInterval(() => {
             if (seconds < 60) {
@@ -32,6 +35,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
         };
     });
 
+    // sleeping
     useEffect(() => {
         let myInterval = setInterval(() => {
             if (asleep) {
@@ -232,7 +236,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible, setCurrentAnimation
                     </Link>
                 </li>
                 <li className='list'>
-                    <Link to="#" onClick={() => auth.signOut()}>
+                    <Link to="#" onClick={signOutStart}>
                         <span className='icon'><ImExit /></span>
                         <span className='title'>Exit</span>
                     </Link>
@@ -251,6 +255,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     setCurrentAnimation: (anim) => dispatch(setCurrentAnimation(anim)),
+    signOutStart: () => dispatch(signOutStart()),
     toggleItemVisible: () => dispatch(toggleItemVisible()),
     togglePoopVisible: () => dispatch(togglePoopVisible()),
     setCurrentItem: (item) => dispatch(setCurrentItem(item)),
