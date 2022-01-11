@@ -43,3 +43,22 @@
         }
     }
 }
+
+
+@media (max-width: 400px){
+    .need-box {
+        left: 0;
+        position: relative;
+        .need {
+            width: 130px;
+            height: 100%;
+        }
+    
+        span{
+            position: absolute;
+            right: 116px;
+            top: 44px;
+            font-size: 0.9em;
+        }
+    }
+}
