@@ -1,1 +1,0 @@
-const [currentStateValue, functionToUpdateState] = useState(initialStateValue);

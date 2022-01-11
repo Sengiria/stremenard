@@ -1,11 +1,11 @@
 .navigation {
     position: relative;
     width: 70%;
-    height: 150px;
+    height: 20vh;
     background: #fff;
     border-radius: 35px;
     box-shadow: 0 15px 25px rgba(0,0,0,0.1);
-    margin-bottom: 100px;
+    margin-bottom: 3vh;
     border: 1px solid black;
 
     ul {
@@ -19,7 +19,7 @@
         li {
             position: relative;
             list-style: none;
-            width: 120px;
+            width: 5vw;
             height: 100%;
             z-index: 1;
 
@@ -44,7 +44,7 @@
             .icon {
                 position: relative;
                 display: block;
-                line-height: 150px;
+                line-height: 20vh;
                 text-align: center;
                 transition: 0.5s;
                 font-size: 2.5em;
@@ -52,7 +52,7 @@
 
             .title {
                 position: absolute;
-                top: 160px;
+                top: 25vh;
                 left: 50%;
                 transform: translate(-50%,15%);
                 background: #fff;
@@ -63,7 +63,7 @@
                 transition: 0.5s;
                 opacity: 0;
                 visibility: none;
-                font-size: 1.5em;
+                font-size: 1em;
                 border: 1px solid black;
                 font-weight: 600;
 

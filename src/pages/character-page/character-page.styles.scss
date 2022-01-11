@@ -8,7 +8,7 @@ $light-blue: #03a9f4;
 
     .character-screen {
         position: relative;
-        flex-grow: 3;
+        width: 50vw;
         transition: 1s;
         display: flex;
         justify-content: center;
@@ -21,15 +21,15 @@ $light-blue: #03a9f4;
         background-size: cover;
 
         .card {
-            max-width: 100%;
+            width: 60%;
             text-align: center;
             transition: 0.5s;
-            height: 100%;
+            height: 70%;
             position: relative;
 
             .image-box {
-                width: 600px;
-                height: 50vh;
+                width: 100%;
+                height: 100%;
                 display: flex;
                 position: absolute;
                 bottom:0;
@@ -46,7 +46,7 @@ $light-blue: #03a9f4;
     .interaction-screen {
             padding: 10px 50px;
             background: $light-green;
-            flex-grow: 1;
+            width: 50vw;
 
             .menu {
                 display: flex;
@@ -73,7 +73,8 @@ $light-blue: #03a9f4;
                     span {
                         width: 6vw;
                         font-weight: 600;
-                        font-size: 1.7em;
+                        font-size: 1em;
+                        width: 20%;
                         
                         &:nth-child(2){
                             width: 350px;

@@ -15,11 +15,14 @@ import { signOutStart } from '../../redux/user/user.actions';
 const InteractionMenu = ({ currentUser, asleep, poopVisible, 
     setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep, 
     togglePoopVisible, toggleNeedVisible, setCurrentItem, signOutStart }) => {
+
     const { boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
     const [seconds, setSeconds] = useState(0)
+    const [actionsDisabled, toggleDisabled] = useState(false)
+
 
     //increase stats by minute
-    useEffect(() => {
+   /* useEffect(() => {
         let myInterval = setInterval(() => {
             if (seconds < 60) {
                 setSeconds(seconds + 5);
@@ -33,10 +36,10 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible,
         return () => {
             clearInterval(myInterval);
         };
-    });
+    });*/
 
     // sleeping
-    useEffect(() => {
+    /*useEffect(() => {
         let myInterval = setInterval(() => {
             if (asleep) {
                 const newSleepiness = sleepiness - 10
@@ -55,9 +58,9 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible,
         return () => {
             clearInterval(myInterval);
         };
-    });
+    });*/
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (sleepiness === 100) {
             sleep()
         }
@@ -69,9 +72,9 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible,
             naturesCall()
         }
 
-    }, [natureCalls])
+    }, [natureCalls])*/
 
-    useEffect(() => {
+   /* useEffect(() => {
         if (boredom === 100) {
             setNeed("I'm soooo boooored!")
             toggleNeedVisible()
@@ -95,7 +98,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible,
             }, 3000);
         }
 
-    }, [boredom, hunger, thirst])
+    }, [boredom, hunger, thirst])*/
 
     const switchAnimation = (anim) => {
         setCurrentAnimation(anim)
