@@ -24,13 +24,16 @@ $light-blue: #03a9f4;
             max-width: 100%;
             text-align: center;
             transition: 0.5s;
+            height: 100%;
+            position: relative;
 
             .image-box {
                 width: 600px;
                 height: 50vh;
                 display: flex;
-               // overflow: hidden;
-                margin: 0 auto;
+                position: absolute;
+                bottom:0;
+                left: 0;
                 flex-wrap: wrap;
 
                 img {
