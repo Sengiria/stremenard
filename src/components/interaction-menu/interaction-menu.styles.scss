@@ -118,11 +118,12 @@
 
 @media (max-width: 400px){
     .navigation {
-        height: 80px;
-        margin-bottom: 40px;
-        width: 80%;
+        height: 15vh;
+        margin-bottom: 3vh;
+        width: 70%;
         ul {
             li {
+                width: 10vw;
                 &:hover {
                     a .title {
                         opacity: 1;
@@ -131,6 +132,9 @@
                     }
                 }
             a {
+                .icon {
+                    line-height: 15vh;
+                }
                 .title {  
                     font-size: 0.7em;
                     top: 108px; 
