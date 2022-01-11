@@ -24,12 +24,16 @@
   @media (max-width: 768px){
     .progress-bar {
       width: 80px;
+    }
+
+  }
+
+  @media (max-width: 400px){
+    .progress-bar {
+      width: 40px;
       span {
 
       }
     }
     
-    .filler {
-
-    }
   }

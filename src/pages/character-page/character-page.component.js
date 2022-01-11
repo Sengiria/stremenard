@@ -32,14 +32,6 @@ const CharacterPage = ({ currentUser }) => {
                 </div>
                 <div className='stats'>
                     <div className='stat-box'>
-                        <span>Name:</span>
-                        <span>{gochiName}</span>
-                    </div>
-                    <div className='stat-box'>
-                        <span>Level:</span>
-                        <span>{level}</span>
-                    </div>
-                    <div className='stat-box'>
                         <span>Boredom: </span>
                         <ProgressBar currentValue={boredom} maxValue={100}/>
                     </div>

@@ -48,7 +48,6 @@
                 text-align: center;
                 transition: 0.5s;
                 font-size: 2.5em;
-
             }
 
             .title {
@@ -109,6 +108,32 @@
             .active {
                 .icon {
                     
+                }
+            }
+        }
+    }
+    }
+}
+
+
+@media (max-width: 400px){
+    .navigation {
+        height: 80px;
+        margin-bottom: 40px;
+        width: 80%;
+        ul {
+            li {
+                &:hover {
+                    a .title {
+                        opacity: 1;
+                        visibility: visible;
+                        transform: translate(-50%, -30%);
+                    }
+                }
+            a {
+                .title {  
+                    font-size: 0.7em;
+                    top: 108px; 
                 }
             }
         }

@@ -164,6 +164,7 @@ $light-blue: #03a9f4;
         .interaction-screen {
             background: transparent;
             padding: 5px 10px;
+            width: 100%;
             z-index: 2;
                 .menu {
                     margin: 10px auto;
@@ -180,7 +181,7 @@ $light-blue: #03a9f4;
                         justify-content: none;
     
                         span {
-                            font-size: 1em;
+                            font-size: 0.7em;
                             width: 100%;
     
                             &:nth-child(2){
@@ -188,9 +189,6 @@ $light-blue: #03a9f4;
                             }
                         }
     
-                        div {
-    
-                        }
                     }
                 }
            }
