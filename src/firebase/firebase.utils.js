@@ -40,8 +40,6 @@ export const createUserProfileDocument = async (userAuth, gochi, additionalData)
         level: 1,
         hunger: 40,
         thirst: 40,
-        natureCalls: 40,
-        sleepiness: 40,
         boredom: 40,
         ...additionalData
 

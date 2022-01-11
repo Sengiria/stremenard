@@ -35,3 +35,8 @@ export const signOutFailure = error => ({
     type: UserActionTypes.SIGN_OUT_FAILURE,
     payload: error
 });
+
+export const setCurrentUser = user => ({
+    type: UserActionTypes.SET_CURRENT_USER,
+    payload:user
+})

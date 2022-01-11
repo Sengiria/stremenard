@@ -31,13 +31,17 @@ const CharacterPage = ({ currentUser }) => {
                     <InteractionMenu />
                 </div>
                 <div className='stats'>
+                <div className='stat-box'>
+                        <span>Name: </span>
+                        <span>{gochiName} lvl{level}</span>
+                    </div>
+                <div className='stat-box'>
+                        <span>Experience: </span>
+                        <ProgressBar currentValue={xp} maxValue={xpSystem[level]}/>
+                    </div>
                     <div className='stat-box'>
                         <span>Boredom: </span>
                         <ProgressBar currentValue={boredom} maxValue={100}/>
-                    </div>
-                    <div className='stat-box'>
-                        <span>Sleepiness:</span>
-                        <ProgressBar currentValue={sleepiness} maxValue={100}/>
                     </div>
                     <div className='stat-box'>
                         <span>Hunger:</span>
@@ -46,10 +50,6 @@ const CharacterPage = ({ currentUser }) => {
                     <div className='stat-box'>
                         <span>Thirst:</span>
                         <ProgressBar currentValue={thirst} maxValue={100}/>
-                    </div>
-                    <div className='stat-box'>
-                        <span>Nature Calls:</span>
-                        <ProgressBar currentValue={natureCalls} maxValue={100}/> 
                     </div>
                 </div>
 

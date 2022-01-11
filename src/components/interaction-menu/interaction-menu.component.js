@@ -12,23 +12,23 @@ import { useEffect, useState } from 'react';
 import { selectAsleep, selectPoopVisible } from '../../redux/gochi/gochi.selector';
 import { signOutStart } from '../../redux/user/user.actions';
 
-const InteractionMenu = ({ currentUser, asleep, poopVisible, 
-    setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep, 
+const InteractionMenu = ({ currentUser, asleep, poopVisible,
+    setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep,
     togglePoopVisible, toggleNeedVisible, setCurrentItem, signOutStart }) => {
 
     const { boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
-    const [seconds, setSeconds] = useState(0)
-    const [actionsDisabled, toggleDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(false)
 
-
-    //increase stats by minute
-   /* useEffect(() => {
+    // increase stats by minute
+    useEffect(() => {
+        let seconds = 0
         let myInterval = setInterval(() => {
+            console.log(disabled)
             if (seconds < 60) {
-                setSeconds(seconds + 5);
+                seconds++;
             }
             if (seconds === 60) {
-                setSeconds(0);
+                seconds = 0;
                 increaseStats()
                 clearInterval(myInterval)
             }
@@ -36,163 +36,154 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible,
         return () => {
             clearInterval(myInterval);
         };
-    });*/
+    });
 
-    // sleeping
-    /*useEffect(() => {
-        let myInterval = setInterval(() => {
-            if (asleep) {
-                const newSleepiness = sleepiness - 10
-                const newValue = { sleepiness: newSleepiness }
-                if (newSleepiness >= 0) {
-                    updateGochi(currentUser.id, newValue, xp, level, 0)
-                } else {
-                    toggleAsleep()
-                    switchAnimation('wakeUp')
+    // rnd sleep and nature's call
+    useEffect(() => {
+        let rnd
+        let myInterval
+        if (!asleep) {
+            myInterval = setInterval(() => {
+                rnd = Math.floor(Math.random() * 100);
+                if (100 >= rnd && rnd >= 97) {
+                    sleep()
                 }
-            } else {
-                clearInterval(myInterval)
+                else if (96 >= rnd && rnd >= 86) {
+                    naturesCall()
+                }
+            }, 5000)
+        }
 
-            }
-        }, 1000)
         return () => {
             clearInterval(myInterval);
         };
-    });*/
+    }, [asleep]);
 
-    /*useEffect(() => {
-        if (sleepiness === 100) {
-            sleep()
-        }
 
-    }, [sleepiness])
-
-    useEffect(() => {
-        if (natureCalls === 100) {
-            naturesCall()
-        }
-
-    }, [natureCalls])*/
-
-   /* useEffect(() => {
-        if (boredom === 100) {
-            setNeed("I'm soooo boooored!")
-            toggleNeedVisible()
-            setTimeout(() => {
-                toggleNeedVisible()
-            }, 3000);
-        }
-        if (hunger === 100) {
-            console.log('hunger is full')
-            setNeed("I'm starving!")
-            toggleNeedVisible()
-            setTimeout(() => {
-                toggleNeedVisible()
-            }, 3000);
-        }
-        if (thirst === 100) {
-            setNeed("I'm thirsty!")
-            toggleNeedVisible()
-            setTimeout(() => {
-                toggleNeedVisible()
-            }, 3000);
-        }
-
-    }, [boredom, hunger, thirst])*/
+    // needs visible
+     useEffect(() => {
+         if (boredom === 100) {
+             setNeed("I'm soooo boooored!")
+             toggleNeedVisible()
+             setTimeout(() => {
+                 toggleNeedVisible()
+             }, 3000);
+         }
+         if (hunger === 100) {
+             setNeed("I'm starving!")
+             toggleNeedVisible()
+             setTimeout(() => {
+                 toggleNeedVisible()
+             }, 3000);
+         }
+         if (thirst === 100) {
+             setNeed("I'm thirsty!")
+             toggleNeedVisible()
+             setTimeout(() => {
+                 toggleNeedVisible()
+             }, 3000);
+         }
+ 
+     }, [boredom, hunger, thirst])
 
     const switchAnimation = (anim) => {
         setCurrentAnimation(anim)
         toggleItemVisible()
+        setDisabled(true)
         setTimeout(() => {
             setCurrentAnimation('walk')
             toggleItemVisible()
             setCurrentItem('')
+            setDisabled(false)
         }, 2000);
     }
     const feedGochi = e => {
         const newHunger = hunger - 10
-        const newNatureCalls = natureCalls + 20
-        const newValue = { hunger: newHunger, natureCalls: newNatureCalls }
+        const newValue = { hunger: newHunger }
 
-        if (poopVisible) {
-            setNeed("Clean me first!")
-            toggleNeedVisible()
-            setTimeout(() => {
+        if (!disabled) {
+            if (poopVisible) {
+                setNeed("Clean me first!")
                 toggleNeedVisible()
-            }, 3000);
-        } else if (newHunger >= 0 && natureCalls <= 100) {
-            setCurrentItem('pizza.png')
-            updateGochi(currentUser.id, newValue, xp, level, 20)
-            switchAnimation('happy')
+                setTimeout(() => {
+                    toggleNeedVisible()
+                }, 3000);
+            } else if (newHunger >= 0) {
+                setCurrentItem('pizza.png')
+                updateGochi(currentUser.id, newValue, xp, level, 20)
+                switchAnimation('happy')
+            }
         }
+
     }
     const giveGochiWater = e => {
         const newThirst = thirst - 10
-        const newNatureCalls = natureCalls + 20
-        const newValue = { thirst: newThirst, natureCalls: newNatureCalls }
+        const newValue = { thirst: newThirst }
 
-        if (poopVisible) {
-            setNeed("Clean me first!")
-            toggleNeedVisible()
-            setTimeout(() => {
+        if (!disabled) {
+            if (poopVisible) {
+                setNeed("Clean me first!")
                 toggleNeedVisible()
-            }, 3000);
-        } else if (newThirst >= 0 && natureCalls <= 100) {
-            setCurrentItem('water.png')
-            updateGochi(currentUser.id, newValue, xp, level, 20)
-            switchAnimation('happy')
-
+                setTimeout(() => {
+                    toggleNeedVisible()
+                }, 3000);
+            } else if (newThirst >= 0 && natureCalls <= 100) {
+                setCurrentItem('water.png')
+                updateGochi(currentUser.id, newValue, xp, level, 20)
+                switchAnimation('happy')
+            }
         }
     }
     const playWithGochi = e => {
         const newBoredom = boredom - 10
-        const newSleepiness = sleepiness + 10
-        const newValue = { boredom: newBoredom, sleepiness: newSleepiness }
+        const newValue = { boredom: newBoredom }
 
-        if (poopVisible) {
-            setNeed("Clean me first!")
-            toggleNeedVisible()
-            setTimeout(() => {
+        if (!disabled) {
+            if (poopVisible) {
+                setNeed("Clean me first!")
                 toggleNeedVisible()
-            }, 3000);
-        } else if (newBoredom >= 0 && newSleepiness <= 100) {
-            updateGochi(currentUser.id, newValue, xp, level, 50)
-            if (newSleepiness !== 100) {
+                setTimeout(() => {
+                    toggleNeedVisible()
+                }, 3000);
+            } else if (newBoredom >= 0) {
+                updateGochi(currentUser.id, newValue, xp, level, 50)
                 setCurrentItem('ball.png')
                 switchAnimation('jump')
             }
         }
     }
     const cleanGochi = e => {
-        if (poopVisible) {
-            setCurrentItem('broom.png')
-            updateGochi(currentUser.id, null, xp, level, 10)
-            switchAnimation('bigJump')
-            togglePoopVisible()
+        if (!disabled) {
+            if (poopVisible) {
+                setCurrentItem('broom.png')
+                updateGochi(currentUser.id, null, xp, level, 10)
+                switchAnimation('bigJump')
+                togglePoopVisible()
+            }
         }
     }
     const wakeGochi = e => {
-        if (asleep) {
-            toggleAsleep()
-            switchAnimation('wakeUp')
-            setCurrentItem('clock.png')
-        }
+            if (asleep) {
+                toggleAsleep()
+                switchAnimation('wakeUp')
+                setCurrentItem('clock.png')
+                setDisabled(false)
+            }
     }
     const sleep = () => {
+        setCurrentItem('sleep.png')
         setCurrentAnimation('sleep')
         toggleAsleep()
+        setDisabled(true)
     }
     const naturesCall = () => {
         switchAnimation('naturesCall')
-        //setTimeout(() => {
-        togglePoopVisible()
-        //}, 1500);
-
-        const newValue = { natureCalls: 0 }
-        updateGochi(currentUser.id, newValue, xp, level, 50)
+        setCurrentItem('toilet.png')
+        if(!poopVisible) togglePoopVisible()
     }
+
     const increaseStats = () => {
-        const stats = { boredom: boredom + 10, hunger: hunger + 5, thirst: thirst + 2, natureCalls: natureCalls + 10, sleepiness: sleepiness + 10 }
+        const stats = { boredom: boredom + 10, hunger: hunger + 5, thirst: thirst + 2 }
         const newValue = {}
 
         Object.entries(stats).map(([k, v]) => {
