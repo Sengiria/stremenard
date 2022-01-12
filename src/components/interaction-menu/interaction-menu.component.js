@@ -16,7 +16,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible,
     setCurrentAnimation, setNeed, toggleItemVisible, toggleAsleep,
     togglePoopVisible, toggleNeedVisible, setCurrentItem, signOutStart }) => {
 
-    const { boredom, hunger, thirst, level, natureCalls, sleepiness, xp } = currentUser
+    const { boredom, hunger, thirst, level, xp } = currentUser
     const [disabled, setDisabled] = useState(false)
 
     // increase stats by minute
@@ -127,7 +127,7 @@ const InteractionMenu = ({ currentUser, asleep, poopVisible,
                 setTimeout(() => {
                     toggleNeedVisible()
                 }, 3000);
-            } else if (newThirst >= 0 && natureCalls <= 100) {
+            } else if (newThirst >= 0) {
                 setCurrentItem('water.png')
                 updateGochi(currentUser.id, newValue, xp, level, 20)
                 switchAnimation('happy')
